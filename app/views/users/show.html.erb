@@ -8,5 +8,5 @@
 <strong>Email: </strong> <%= @user.email %>
 </p>
 
-<small><%= link_to "Edit", "#" %></small>
-<small><%= link_to "Destroy", "#" %></small>
+<small><%= link_to "Edit", edit_user_path(@user.id) %></small>
+<small><%= link_to "Destroy", @user, method: :destroy %></small>
