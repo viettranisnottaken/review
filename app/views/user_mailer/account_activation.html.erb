@@ -1,0 +1,5 @@
+<h1>Beeg Deek EnerG</h1>
+
+<p>
+  Greetings, <%= @user.name %>, please click <%= link_to "here", edit_account_activation_url(@user.activation_token, email: @user.email) %> to activate your account
+</p>
