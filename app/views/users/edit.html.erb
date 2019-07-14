@@ -1,5 +1,6 @@
-<h1>Edit pedofile</h1>
+<h1>Editing User</h1>
 
-<% provide :button_text, "Update profile" %>
+<%= render 'form', user: @user %>
 
-<%= render "form" %>
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', users_path %>

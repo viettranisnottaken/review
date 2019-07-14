@@ -1,12 +1,19 @@
-<h1>Profile</h1>
+<div class ="login1 pointer" >
+  <h1 style = "color: red ">Login Completed</h1>
+
+</div>
+<p id="notice"><%= notice %></p>
 
 <p>
-<strong>Name: </strong> <%= @user.name %>
+  <strong>Name:</strong>
+  <%= gravatar_for @user %>
+  <%= @user.name %>
 </p>
 
 <p>
-<strong>Email: </strong> <%= @user.email %>
+  <strong>Email:</strong>
+  <%= @user.email %>
 </p>
 
-<small><%= link_to "Edit", edit_user_path(@user.id) %></small>
-<small><%= link_to "Destroy", @user, method: :destroy %></small>
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

@@ -1,44 +1,43 @@
 class PasswordResetsController < ApplicationController
-  # before_action :valid_user, only: [:edit, :update]
-  before_action :check_reset_expiration, only: [:edit, :update]
-
+  before_action :get_user, only: [:edit, :update]
 
   def new
-  end
 
+  end
   def create
-    @user = User.find_by(email: params[:password_reset][:email])
+    @user = User.find_by(email: params[:password_reset][:email].downcase)
     if @user
       @user.create_reset_digest
-      UserMailer.password_reset(@user).deliver_now
-      redirect_to root_url
-      flash[:info] = "Please check your email"
+      @user.send_password_reset_email
+      flash[:info] = "Pls check ur email"
+      redirect_to root_path
     else
-      flash[:danger] = "Shove that forged email up your ass"
-      render :new
+      render :new # , alert: "Don't lie to me"
+      flash.now[:danger] = "Don't lie to me"
     end
   end
 
   def edit
-    @user = User.find_by(email: params[:email].downcase)
+    # @user = User.find_by(email: params[:email].downcase)
+    unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
+      redirect_to root_path
+      flash[:error] = "Have you activated your account or checked your email?"
+    end
   end
-
   def update
-    @user = User.find_by(email: params[:email].downcase)
-    if @user && @user.activated? && @user.authenticated?("reset", params[:id])
-      if params[:password_reset][:password].empty?
-        @user.errors.add(:password, "can't be empty")
-        render 'edit'
-      elsif @user.update_attributes(user_params)
-        log_in @user
-        flash[:success] = "Password has been reset."
-        redirect_to @user
-      else
-        render 'edit'
-      end
+    # @user = User.find_by(email: params[:email].downcase)
+    if @user.password_reset_expired?
+      flash[:danger] = "Password reset has expired"
+      redirect_to new_password_reset_url
+    elsif params[:user][:password].empty?
+      @user.errors.add(:password, "can't be empty")
+      render :edit
+    elsif @user.update_attributes(user_params)
+      flash[:success] = "Password has been reset"
+      # log_in @user
+      redirect_to root_path
     else
-      redirect_to root_url
-      flash[:danger] = "Have you activated or received your password reset email?"
+      render :edit
     end
   end
 
@@ -48,18 +47,7 @@ class PasswordResetsController < ApplicationController
     params.require(:user).permit(:password, :password_confirmation)
   end
 
-  def valid_user
-    unless (@user && @user.activated? &&
-      @user.authenticated?(:reset, params[:id]))
-      redirect_to root_url
-    end
+  def get_user
+    @user = User.find_by(email: params[:email].downcase)
   end
-
-  def check_reset_expiration
-    if @user && @user.reset_expired?
-      flash[:danger] = "Password reset expired"
-      redirect_to new_password_reset_url
-    end
-  end
-
 end

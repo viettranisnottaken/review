@@ -1,5 +1,9 @@
-<h1>Beeg Deek EnerG</h1>
+<h1>User#account_activation</h1>
 
 <p>
-  Greetings, <%= @user.name %>, please click <%= link_to "here", edit_account_activation_url(@user.activation_token, email: @user.email) %> to activate your account
+  Hi, <%= @user.name %>
 </p>
+<p>Welcome to the family!</p>
+<p>Click the link below to activate your account</p>
+<!-- <p><%= link_to "Activate", edit_account_activation_url(id: @user.activation_token, email: @user.email) %></p> -->
+<p><%= link_to "Activate", edit_account_activation_url(@user.activation_token, email: @user.email) %></p>
