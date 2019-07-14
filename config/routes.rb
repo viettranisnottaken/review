@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "/posts", to: "microposts#index"
   get 'password_resets/new'
   get 'password_resets/edit'
   get "/login", to: 'sessions#new'
@@ -14,6 +13,5 @@ Rails.application.routes.draw do
   resources :users
   resources :account_activations
   resources :password_resets
-  resources :microposts
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

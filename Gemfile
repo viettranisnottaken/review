@@ -69,5 +69,4 @@ gem "faker"
 
 #Paginate
 gem "will_paginate", "~> 3.1.7"
-# gem 'will_paginate', '~> 3.1.0'
 gem "bootstrap-will_paginate"

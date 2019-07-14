@@ -26,7 +26,7 @@ class PasswordResetsController < ApplicationController
   def update
     @user = User.find_by(email: params[:email].downcase)
     if @user && @user.activated? && @user.authenticated?("reset", params[:id])
-      if params[:user][:password].empty?
+      if params[:password_reset][:password].empty?
         @user.errors.add(:password, "can't be empty")
         render 'edit'
       elsif @user.update_attributes(user_params)
