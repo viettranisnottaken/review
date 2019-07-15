@@ -32,3 +32,8 @@ end
   content = Faker::Games::Dota.quote
   Post.create!(title: title, content: content)
 end
+
+# 200.times do |time|
+#   content = Faker::Games::Dota.quote
+#   user.microposts.create!(content: content)
+# end

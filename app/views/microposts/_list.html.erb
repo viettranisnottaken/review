@@ -1,0 +1,15 @@
+
+<% @microposts.each do |p| %>
+<div class="panel panel-default">
+  <div style="padding: 15px 40px">
+    <h3><%= p.user.name %></h3>
+    <p><%= p.content %></p>
+    <p><%= p.created_at.strftime("%Y-%m-%d %H:%M-%S") %></p>
+    <p>
+      <small><%= link_to "Edit", edit_micropost_path(p) %></small>
+      <small><%= link_to "Show", "#" %></small>
+      <small><%= link_to "Destroy", p, method: :delete, data: { confirm: 'Are you sure?' } %></small>
+    </p>
+  </div>
+</div>
+<% end %>
