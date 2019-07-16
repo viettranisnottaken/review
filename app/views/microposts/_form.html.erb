@@ -1,5 +1,6 @@
 
     <%= form_for(@micropost) do |f| %>
-      <%= f.text_field :content, style: "width: 9.5cm; height: 4cm" %>
+      <%= f.text_field :content, style: "width: 9.5cm; height: 168px" %>
+      <br><br>
       <%= f.submit yield(:button_text), class: "btn btn-primary" %>
     <% end %>

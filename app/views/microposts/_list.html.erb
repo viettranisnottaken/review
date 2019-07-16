@@ -7,7 +7,7 @@
     <p><%= p.created_at.strftime("%Y-%m-%d %H:%M-%S") %></p>
     <p>
       <small><%= link_to "Edit", edit_micropost_path(p) %></small>
-      <small><%= link_to "Show", "#" %></small>
+      <small><%= link_to "Show", p %></small>
       <small><%= link_to "Thien An Mon", p, method: :delete, data: { confirm: 'Are you sure?' } %></small>
     </p>
   </div>

@@ -1,2 +1,46 @@
-<h1>Microposts#show</h1>
-<p>Find me in app/views/microposts/show.html.erb</p>
+<h1>Post</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-default", style="padding: 15px 40px">
+      <h3><%= @micropost.user.name %></h3>
+      <p><small><%= @micropost.created_at.strftime("%Y-%m-%d") %></small> </p>
+      <p><%= @micropost.content %></p>
+    </div>
+
+    <h3>Comments</h3>
+
+    <div class="">
+      <% if @comment && @comment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+          <ul>
+          <% @comment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= form_for(:comment, url: comments_path, method: :post) do |f| %>
+        <%= hidden_field_tag :micropost_id, @micropost.id %>
+
+        <%= f.label :content %>
+        <%= f.text_field :content %>
+
+        <%= f.submit "Comment!", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+
+    <% @comments.each do |c| %>
+    <div class="panel panel-default">
+      <h3><%= c.user.name %></h3>
+      <p><%= c.content %></p>
+      <p>
+        <small><%= link_to "Edit", "#" %></small>
+        <small><%= link_to "Show", '#' %></small>
+        <small><%= link_to "Thien An Mon", '#', method: :delete, data: { confirm: 'Are you sure?' } %></small>
+      </p>
+    </div>
+    <% end %>
+  </div>
+</div>

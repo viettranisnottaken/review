@@ -18,11 +18,11 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    # @user = User.find_by(email: params[:email].downcase)
-    # unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
-    #   redirect_to root_path
-    #   flash[:danger] = "Have you activated your account or checked your email?"
-    # end
+    @user = User.find_by(email: params[:email].downcase)
+    unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
+      redirect_to root_path
+      flash[:danger] = "Have you activated your account or checked your email?"
+    end
   end
   def update
     # @user = User.find_by(email: params[:email].downcase)

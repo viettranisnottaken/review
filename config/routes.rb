@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :users
   resources :microposts
+  resources :comments
 
   get "/posts", to: "posts#index"
   root 'static_pages#home'

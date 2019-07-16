@@ -1,6 +1,6 @@
 class MicropostsController < ApplicationController
   before_action :check_valid_user, only: [:destroy]
-  before_action :get_micropost, only: [:edit, :update, :destroy]
+  before_action :get_micropost, only: [:edit, :update, :destroy, :show]
 
   def index
     # @microposts = Micropost.all
@@ -23,7 +23,8 @@ class MicropostsController < ApplicationController
 
   def update
     if current_user
-      if @micropost.update_attribute(micropost_params)
+      if @micropost.update_attributes(micropost_params)
+        #strong params requires update_attributes
         redirect_to action: :index
         flash[:success] = "Post updated!"
       else
@@ -36,6 +37,7 @@ class MicropostsController < ApplicationController
   end
 
   def show
+    @comments = @micropost.comments
   end
 
   def destroy
