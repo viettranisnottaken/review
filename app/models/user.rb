@@ -4,6 +4,15 @@ class User < ApplicationRecord
   before_create :create_activation_digest
 
   has_many :microposts, dependent: :destroy
+  has_many :active_relationships, class_name: "Relationship",
+                                  foreign_key: "following_id",
+                                  dependent: :destroy
+  has_many :followed, through: :active_relationships, source: "followed_id"
+  has_many :passive_relationships, class_name: "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent: :destroy
+  has_many :following, through: :passive_relationships, source: "following_id"
+
 
   validates :name, presence: true, length: {maximum: 100}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -43,7 +52,7 @@ class User < ApplicationRecord
   end
 
   def reset_expired?
-    reset_sent_at < 2.hours.ago
+    reset_sent_at.<(2.hours.ago)
   end
 
   private

@@ -8,7 +8,7 @@ class PasswordResetsController < ApplicationController
     @user = User.find_by(email: params[:password_reset][:email].downcase)
     if @user
       @user.create_reset_digest
-      @user.send_password_reset_email
+      UserMailer.password_reset(@user).deliver_now
       flash[:info] = "Pls check ur email"
       redirect_to root_path
     else
@@ -19,14 +19,14 @@ class PasswordResetsController < ApplicationController
 
   def edit
     # @user = User.find_by(email: params[:email].downcase)
-    unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
-      redirect_to root_path
-      flash[:error] = "Have you activated your account or checked your email?"
-    end
+    # unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
+    #   redirect_to root_path
+    #   flash[:danger] = "Have you activated your account or checked your email?"
+    # end
   end
   def update
     # @user = User.find_by(email: params[:email].downcase)
-    if @user.password_reset_expired?
+    if @user.reset_expired?
       flash[:danger] = "Password reset has expired"
       redirect_to new_password_reset_url
     elsif params[:user][:password].empty?
