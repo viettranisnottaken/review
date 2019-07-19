@@ -7,11 +7,11 @@ class User < ApplicationRecord
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "following_id",
                                   dependent: :destroy
-  has_many :followed, through: :active_relationships, source: "followed_id"
+  has_many :followed, through: :active_relationships, source: :followed
   has_many :passive_relationships, class_name: "Relationship",
                                    foreign_key: "followed_id",
                                    dependent: :destroy
-  has_many :following, through: :passive_relationships, source: "following_id"
+  has_many :following, through: :passive_relationships, source: :following
 
 
   validates :name, presence: true, length: {maximum: 100}
