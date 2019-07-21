@@ -100,4 +100,11 @@ class UsersController < ApplicationController
         end
       end
     end
+
+    def check_admin
+      unless current_user.admin
+        redirect_to root_path
+        flash[:danger] = "Fuck off"
+      end
+    end
 end

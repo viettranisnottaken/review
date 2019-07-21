@@ -1,11 +1,18 @@
 Rails.application.routes.draw do
 
+  get 'comments/edit'
+  get '/microposts', to: 'microposts#index'
+  get 'microposts/show'
+  get 'microposts/edit'
   # get 'password_resets/new'
   # get 'password_resets/edit'
   resources :posts
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :users
+  resources :microposts
+  resources :relationships
+
   get "/posts", to: "posts#index"
   root 'static_pages#home'
   # get  "/users", to: "users#index"

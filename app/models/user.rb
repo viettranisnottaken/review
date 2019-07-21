@@ -3,6 +3,16 @@ class User < ApplicationRecord
   before_save { self.email = email.downcase }
   before_create :create_activation_digest
 
+  has_many :microposts, dependent: :destroy
+  has_many :comments, as: :comment_container
+  has_many :active_relationships, class_name: "Relationship",
+                                  foreign_key: "following_id",
+                                  dependent: :destroy
+  has_many :followed, through: :active_relationships, source: :followed
+  has_many :passive_relationships, class_name: "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent: :destroy
+  has_many :following, through: :passive_relationships, source: :following
 
   validates :name,  presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

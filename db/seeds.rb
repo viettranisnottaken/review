@@ -27,8 +27,13 @@ User.create!(name:  "Example User",
 end
 
 
-200.times do |time|
-  title = Faker::Games::Dota.hero
+# 200.times do |time|
+#   title = Faker::Games::Dota.hero
+#   content = Faker::Games::Dota.quote
+#   Post.create!(title: title, content: content)
+# end
+
+100.times do |time|
   content = Faker::Games::Dota.quote
-  Post.create!(title: title, content: content)
+  User.first.microposts.create!(content: content)
 end
