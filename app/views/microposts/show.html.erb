@@ -9,13 +9,25 @@
 <h3>Comments</h3>
 
 <div class="">
-  <%= form_for(@micropost.comments.build) do |f| %>
-    <%= f.label :content %>
-    <%= f.text_field :content, class: "form-control" %>
-    <%= f.submit "Update comment", class: "btn btn-primary" %>
+  <% @micropost.comments.each do |c| %>
+    <div class="panel panel-default" style="padding: 10px 20px;">
+      <h3><%= c.user.name %></h3>
+      <p><%= c.content %></p>
+      <p>
+        <small><%= link_to "Edit", edit_comment_path(id: c) %></small>
+        <small><%= link_to "Destroy", c, method: :delete, data: {confirm: "Are u sure?"} %></small>
+      </p>
+    </div>
   <% end %>
 </div>
 
 <div class="">
-  index comment
+  <%= form_for(@micropost.comments.build(user: current_user)) do |f| %>
+    <%# (@micropost.comments.build(user: current_user) because if user: current_user
+      is absent, an empty comment full of nils will be created and create an error %>
+    <%= hidden_field_tag :micropost_id, @micropost.id %>
+    <%= f.label :content %>
+    <%= f.text_field :content, class: "form-control" %>
+    <%= f.submit "Create comment", class: "btn btn-primary" %>
+  <% end %>
 </div>

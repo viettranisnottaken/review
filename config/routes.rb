@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :users
   resources :microposts
   resources :relationships
+  resources :comments
 
   get "/posts", to: "posts#index"
   root 'static_pages#home'
