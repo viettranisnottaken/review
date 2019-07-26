@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_22_131054) do
+ActiveRecord::Schema.define(version: 2019_07_26_015850) do
 
   create_table "comments", force: :cascade do |t|
     t.string "content"
@@ -24,12 +24,39 @@ ActiveRecord::Schema.define(version: 2019_07_22_131054) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "item_relationships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "laptop_id"
+    t.integer "pc_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["laptop_id"], name: "index_item_relationships_on_laptop_id"
+    t.index ["pc_id"], name: "index_item_relationships_on_pc_id"
+    t.index ["user_id"], name: "index_item_relationships_on_user_id"
+  end
+
+  create_table "laptops", force: :cascade do |t|
+    t.string "name"
+    t.string "processor"
+    t.integer "ram"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "microposts", force: :cascade do |t|
     t.string "content"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_microposts_on_user_id"
+  end
+
+  create_table "pcs", force: :cascade do |t|
+    t.string "name"
+    t.string "processor"
+    t.integer "ram"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "posts", force: :cascade do |t|

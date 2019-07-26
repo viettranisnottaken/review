@@ -37,3 +37,11 @@ end
   content = Faker::Games::Dota.quote
   User.first.microposts.create!(content: content)
 end
+
+100.times do |n|
+  Laptop.create!(name: "Laptop #{n+1}", processor: ["i3", "i5", "i7"].sample, ram: [4, 8, 16].sample)
+end
+
+100.times do |n|
+  Pc.create!(name: "PC #{n+1}", processor: ["i3", "i5", "i7"].sample, ram: [4, 8, 16].sample)
+end

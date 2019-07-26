@@ -13,6 +13,10 @@ class User < ApplicationRecord
                                    foreign_key: "followed_id",
                                    dependent: :destroy
   has_many :following, through: :passive_relationships, source: :following
+  has_many :item_relationships, class_name: "ItemRelationship",
+                                foreign_key: "user_id"
+  has_many :laptops, through: :item_relationships, source: :item, source_type: "Laptop"
+  has_many :pcs, through: :item_relationships, source: :item, source_type: "Pc"
 
   validates :name,  presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
