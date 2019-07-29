@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-8">
+    <% @laptops.each do |n| %>
+      <div class="panel panel-default">
+        <h3><%= n.name %></h3>
+        <p><%= n.processor %></p>
+        <p><%= n.ram %> GB</p>
+        <%= form_for(n.item_relationships.build) do |f| %>
+          <%= f.submit "Purchase", class: "btn btn-success" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-md-4">
+    <div class="panel panel-default">
+
+    </div>
+  </div>
+</div>

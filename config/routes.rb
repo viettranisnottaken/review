@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'laptops/index'
+  get 'laptops/show'
+  get '/laptops', to: 'laptops#index'
   get 'comments/edit'
   get '/microposts', to: 'microposts#index'
   get 'microposts/show'
@@ -13,6 +16,8 @@ Rails.application.routes.draw do
   resources :microposts
   resources :relationships
   resources :comments
+  resources :laptops
+  resources :item_relationships
 
   get "/posts", to: "posts#index"
   root 'static_pages#home'
