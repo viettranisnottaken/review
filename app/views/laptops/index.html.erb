@@ -5,16 +5,26 @@
         <h3><%= n.name %></h3>
         <p><%= n.processor %></p>
         <p><%= n.ram %> GB</p>
-        <%= form_for(n.item_relationships.build) do |f| %>
+        <%= form_for(n.item_relationships.build, remote: true) do |f| %>
+          <%= hidden_field_tag :laptop_id, n.id %>
+          <%= hidden_field_tag :object, Laptop %>
+          <%= hidden_field_tag :itemtype, "laptop" %>
           <%= f.submit "Purchase", class: "btn btn-success" %>
         <% end %>
       </div>
     <% end %>
+    <%= will_paginate @laptops %>
   </div>
 
   <div class="col-md-4">
+    <p class="affix" style="background-color: white">You have ordered <%= current_user.laptops.count %> products</p>
+    <% current_user.laptops.all.each do |n| %>
     <div class="panel panel-default">
-
+      <h3><%= n.name %></h3>
+      <%= form_for(n.item_relationships.find_by(item_id: n.id), html: {method: :delete}, remote: true) do |f| %>
+        <%= f.submit "Remove", class: "btn" %>
+      <% end %>
     </div>
+    <% end %>
   </div>
 </div>

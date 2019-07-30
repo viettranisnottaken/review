@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-8">
+    <% @pcs.all.each do |n| %>
+      <div class="panel panel-default">
+        <h3><%= n.name %></h3>
+        <p><%= n.processor %></p>
+        <p><%= n.ram %></p>
+        <%= form_for(n.item_relationships.build) do |f| %>
+          <%= hidden_field_tag :pc_id, n.id %>
+          <%= hidden_field_tag :object, Pc %>
+          <%= hidden_field_tag :itemtype, "pc" %>
+          <%= f.submit "Purchase", class: "btn btn-success" %>
+        <% end %>
+      </div>
+    <% end %>
+    <%= will_paginate %>
+  </div>
+
+  <div class="col-md-4">
+    <p class="affix" style="background-color: white">You have ordered <%= current_user.pcs.count %> products</p>
+    <% current_user.pcs.all.each do |n| %>
+      <div class="panel panel-default">
+        <h3><%= n.name %></h3>
+        <%= form_for(n.item_relationships.find_by(item_id: n.id), html: {method: :delete}) do |f| %>
+          <%= f.submit "Remove", class: "btn" %>
+        <% end %>
+      </div>
+    <% end %>
+
+  </div>
+</div>
