@@ -17,14 +17,29 @@
   </div>
 
   <div class="col-md-4">
-    <p class="affix" style="background-color: white">You have ordered <%= current_user.pcs.count %> products</p>
-    <% current_user.pcs.all.each do |n| %>
+    <p class="affix" style="background-color: white">You have ordered <%= current_user.item_relationships.count %> products</p>
+    <% unless current_user.laptops.count == 0 %>
+      <p>Laptops</p>
+      <% current_user.laptops.all.each do |n| %>
       <div class="panel panel-default">
         <h3><%= n.name %></h3>
-        <%= form_for(n.item_relationships.find_by(item_id: n.id), html: {method: :delete}) do |f| %>
+        <%= form_for(n.item_relationships.find_by(item_id: n.id), html: {method: :delete}, remote: true) do |f| %>
           <%= f.submit "Remove", class: "btn" %>
         <% end %>
       </div>
+      <% end %>
+    <% end %>
+
+    <% unless current_user.pcs.count == 0 %>
+      <p>PCs</p>
+      <% current_user.pcs.all.each do |n| %>
+      <div class="panel panel-default">
+        <h3><%= n.name %></h3>
+        <%= form_for(n.item_relationships.find_by(item_id: n.id), html: {method: :delete}, remote: true) do |f| %>
+          <%= f.submit "Remove", class: "btn" %>
+        <% end %>
+      </div>
+      <% end %>
     <% end %>
 
   </div>
